@@ -40,7 +40,7 @@ void printLogo(){
 	cout<<"\tMichal Pompa\n";
 	cout<<"\tMichal Wilczak\n";
 	cout<<endl;
-	cout<<"\thttps://github.com/unknown4122/chess.git\n"<<endl;
+	cout<<"\thttps://github.com/david4122/chess.git\n"<<endl;
 
 	cout<<"Wpisz \"help\", jesli uruchamiasz po raz pierwszy."<<endl;
 #ifdef LINUX_VERSION
@@ -64,7 +64,7 @@ void end(){
 	cout<<"\tMichal Wilczak\n";
 	cout<<"\tOlaf(grafika)\n";
 	cout<<endl;
-	cout<<"Kod do wgladu pod adresem internetowym https://github.com/unknown4122/chess.git\n"<<endl;
+	cout<<"Kod do wgladu pod adresem internetowym https://github.com/david4122/chess.git\n"<<endl;
 	in.close();
 
 }
