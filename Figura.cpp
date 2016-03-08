@@ -4,13 +4,14 @@
 #include<sstream>
 
 #ifdef LINUX_VERSION
-std::string Figura::blackColorCode;
-std::string Figura::whiteColorCode;
-std::string Figura::defaultColorCode;
-#else
-int Figura::blackColorCode;
-int Figura::whiteColorCode;
-int Figura::defaultColorCode;
+std::string Figura::blackColorCode="\033[0;31m";
+std::string Figura::whiteColorCode="\033[0;32m";
+std::string Figura::defaultColorCode="\033[0m";
+#endif
+#ifndef LINUX_VERSION
+int Figura::blackColorCode=12;
+int Figura::whiteColorCode=10;
+int Figura::defaultColorCode=11;
 #endif
 
 int Figura::whiteX;
@@ -23,15 +24,6 @@ Figura::Figura(Color color){
     this->color=color;
     this->olaf='+';
 	this->firstMove=true;
-#ifndef LINUX_VERSION
-	Figura::blackColorCode=12;
-	Figura::whiteColorCode=10;
-	Figura::defaultColorCode=11;
-#else
-	Figura::blackColorCode="\033[0;31m";
-	Figura::whiteColorCode="\033[0;32m";
-	Figura::defaultColorCode="\033[0m";
-#endif
 }
 
 Figura::Figura(std::string s){
