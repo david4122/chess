@@ -92,7 +92,7 @@ int main(){
 	string input;
 	do{
 		try{
-			//system(CLEAR_COMMAND);
+			system(CLEAR_COMMAND);
 			cout<<((board->isWhiteTurn())?"BIALE":"CZARNE")<<endl;
 			board->print();
 			cout<<"<XYnewXnewY> ";

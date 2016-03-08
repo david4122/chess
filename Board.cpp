@@ -19,7 +19,6 @@ Board::Save::Save(int oldX, int oldY, int newX, int newY, const Figura *oldF, co
 	this->castling=castling;
 	this->prev=prev;
 	this->capturedColor=color;
-	std::cout<<"SAVE "<<(oldF->getChar())<<(newF->getChar())<<std::endl;
 }
 
 Board::Board(){
