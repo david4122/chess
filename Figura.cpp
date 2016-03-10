@@ -19,16 +19,15 @@ int Figura::whiteY;
 int Figura::blackX;
 int Figura::blackY;
 
-
-Figura::Figura(Color color){
-    this->color=color;
-    this->olaf='+';
+Figura::Figura(char s, Color c): olaf(s), color(c){
 	this->firstMove=true;
 }
 
-Figura::Figura(std::string s){
-	this->olaf=s[2];
-	this->color=(isupper(s[2])?WHITE:BLACK);
+Figura::Figura(Color color): color(color), olaf('+'){
+	this->firstMove=true;
+}
+
+Figura::Figura(std::string s): olaf(s[2]), color(isupper(s[2])?WHITE:BLACK){
 	this->firstMove=(s[3]=='1');
 }
 
@@ -49,9 +48,11 @@ inline bool isupper(char c){
 	return (c>='A'&&c<='Z');
 }
 
-Pion::Pion(Color color):Figura(color){
-    this->olaf=(color==WHITE?'P':'p');
+inline char symbol(char s, Color c){
+	return (c==WHITE?toupper(s):tolower(s));
 }
+
+Pion::Pion(Color color):Figura(symbol('p', color), color){}
 
 bool Pion::checkMove(int x,int y) const{
 	if(this->firstMove){
@@ -74,46 +75,31 @@ bool Pion::checkMove(int x,int y) const{
 	}
 }
 
-Krol::Krol(Color color):Figura(color){
-    this->color=color;
-    olaf=(color==WHITE?'K':'k');
-}
+Krol::Krol(Color color):Figura(symbol('k', color), color){}
 
 bool Krol::checkMove(int x,int y) const{
 	return (std::abs(x)==1||std::abs(y)==1);
 }
 
-Hetman::Hetman(Color color):Figura(color){
-    this->color=color;
-    olaf=(color==WHITE?'H':'h');
-}
+Hetman::Hetman(Color color):Figura(symbol('h', color), color){}
 
 bool Hetman::checkMove(int x,int y) const{
 	return ((x==0||y==0)||(std::abs(x)==std::abs(y)));
 }
 
-Goniec::Goniec(Color color):Figura(color){
-    this->color=color;
-    olaf=(color==WHITE?'G':'g');
-}
+Goniec::Goniec(Color color):Figura(symbol('g', color), color){}
 
 bool Goniec::checkMove(int x,int y) const{
 	return (std::abs(x)==std::abs(y));
 }
 
-Skoczek::Skoczek(Color color):Figura(color){
-    this->color=color;
-    olaf=(color==WHITE?'S':'s');
-}
+Skoczek::Skoczek(Color color):Figura(symbol('s', color), color){}
 
 bool Skoczek::checkMove(int x,int y) const{
 	return ((std::abs(x)==2&&std::abs(y)==1)||(std::abs(x)==1&&std::abs(y)==2));
 }
 
-Wieza::Wieza(Color color):Figura(color){
-    this->color=color;
-    olaf=(color==WHITE?'W':'w');
-}
+Wieza::Wieza(Color color):Figura(symbol('w', color), color){}
 
 bool Wieza::checkMove(int x,int y) const{
 	return (x==0||y==0);

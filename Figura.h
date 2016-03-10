@@ -19,13 +19,14 @@ class Figura {
         static int whiteColorCode;
         static int defaultColorCode;
 #endif
-		Color color;
-		char olaf;
+		const Color color;
+		const char olaf;
 		static int whiteX, whiteY, blackX, blackY;
 		mutable bool firstMove;
+		explicit Figura(char='+', Color=UNDEFINED);
 
 	public:
-		explicit Figura(Color);
+		explicit Figura(Color=UNDEFINED);
 		Figura(std::string);
 
 		operator std::string() const;
