@@ -71,6 +71,9 @@ void end(){
 
 inline int convert(char c){
 	int x=(c-'0'>=0&&c-'0'<=9)?(c-'0'):(tolower(c)-'a');
+	if(x>7)
+		throw new IOException("FORMAT WEJSCIA: <kolumna><rzad><nowaKolumna><nowyRzad>, np. a2a4");
+	return x;
 }
 
 void report(string s){
