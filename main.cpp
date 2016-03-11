@@ -5,6 +5,7 @@
 #include<iostream>
 #include<ctime>
 #include "Board.cpp"
+#include "Timer.h"
 
 #ifdef LINUX_VERSION
 #define CLEAR_COMMAND "clear"
