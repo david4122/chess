@@ -3,9 +3,11 @@
 #define LINUX_VERSION
 
 #include<iostream>
+#include<fstream>
 #include<ctime>
-#include "Board.h"
-#include "Timer.h"
+#include "Figura.cpp"
+#include "Board.cpp"
+#include "Timer.cpp"
 
 #ifdef LINUX_VERSION
 #define CLEAR_COMMAND "clear"
@@ -98,7 +100,7 @@ int main(){
 	Timer total;
 	do{
 		try{
-			system(CLEAR_COMMAND);
+			//system(CLEAR_COMMAND);
 			cout<<((board->isWhiteTurn())?"BIALE":"CZARNE")<<endl;
 			board->print();
 			cout<<"<XYnewXnewY> ";

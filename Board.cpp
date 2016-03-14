@@ -18,6 +18,7 @@ Board::Save::Save(int oldX, int oldY, int newX, int newY, const Figura *oldF, co
 	this->castling=castling;
 	this->prev=prev;
 	this->capturedColor=color;
+	std::cout<<(capturedColor==WHITE?"WHITE":"BLACK")<<std::endl;
 }
 
 Board::Board(){
@@ -125,10 +126,14 @@ void Board::undo(Save *save){
 	board[save->oldX][save->oldY]->firstMove=save->oldfm;
 	this->castling=save->castling;
 	if(save->capturedColor!=UNDEFINED){
-		if(save->capturedColor==WHITE)
+		if(save->capturedColor==WHITE){
+			std::cout<<"WHITE__";
 			this->whiteCapturedIt--;
-		else
+		}
+		else{
+			std::cout<<"BLACK__";
 			this->blackCapturedIt--;
+		}
 	}
     if(board[save->oldX][save->oldY]->getChar()=='K')
         Figura::setWhiteKingPos(save->oldX, save->oldY);

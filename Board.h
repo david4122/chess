@@ -14,7 +14,7 @@ class Board{
 			bool oldfm, newfm;
 			bool castling;
 			const Figura *oldF, *newF;
-			bool capturedColor;
+			Color capturedColor;
 
 			Save(int,int,int,int, const Figura*, const Figura*, bool, Save*, Color);
 
