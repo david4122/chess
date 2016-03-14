@@ -100,7 +100,8 @@ int main(){
 	Timer total;
 	do{
 		try{
-			//system(CLEAR_COMMAND);
+			system(CLEAR_COMMAND);
+			total.start();
 			cout<<((board->isWhiteTurn())?"BIALE":"CZARNE")<<endl;
 			board->print();
 			cout<<"<XYnewXnewY> ";
