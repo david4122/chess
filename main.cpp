@@ -35,7 +35,8 @@ void printLogo(){
 	system(CLEAR_COMMAND);
 	while(!in.eof()){
 		getline(in, buff);
-		cout<<buff<<endl;
+		cout<<buff<<endl<<flush;
+		//system("sleep 1s");
 	}
 	cout<<"\tDawid Brewinski\n";
 	cout<<"\tMichal Pompa\n";
@@ -72,7 +73,7 @@ void end(){
 
 inline int convert(char c){
 	int x=(c-'0'>=0&&c-'0'<=9)?(c-'0'):(tolower(c)-'a');
-	if(x>7)
+	if(x>8)
 		throw new IOException("FORMAT WEJSCIA: <kolumna><rzad><nowaKolumna><nowyRzad>, np. a2a4");
 	return x;
 }
