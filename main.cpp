@@ -7,7 +7,6 @@
 #include<ctime>
 #include "Figura.cpp"
 #include "Board.cpp"
-#include "Timer.cpp"
 
 #ifdef LINUX_VERSION
 #define CLEAR_COMMAND "clear"
@@ -97,10 +96,9 @@ int main(){
 	Board *board=new Board();
 	int currX, currY, newX, newY;
 	string input;
-	Timer total;
 	do{
 		try{
-			//system(CLEAR_COMMAND);
+			system(CLEAR_COMMAND);
 			cout<<((board->isWhiteTurn())?"BIALE":"CZARNE")<<endl;
 			board->print();
 			cout<<"<XYnewXnewY> ";
@@ -195,6 +193,5 @@ int main(){
 		}
 	} while(true);
 	delete board;
-	printMessage((string("Ta partia trwala ")+(string)total).c_str());
 	end();
 }
