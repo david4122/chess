@@ -4,7 +4,6 @@
 
 #include<iostream>
 #include<fstream>
-#include<ctime>
 #include "Figura.cpp"
 #include "Board.cpp"
 
@@ -99,10 +98,6 @@ int main(){
 	do{
 		try{
 			system(CLEAR_COMMAND);
-<<<<<<< HEAD
-=======
-			total.start();
->>>>>>> timer
 			cout<<((board->isWhiteTurn())?"BIALE":"CZARNE")<<endl;
 			board->print();
 			cout<<"<XYnewXnewY> ";
