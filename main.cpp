@@ -4,7 +4,7 @@
 
 #include<iostream>
 #include<ctime>
-#include "Board.cpp"
+#include "Board.h"
 #include "Timer.h"
 
 #ifdef LINUX_VERSION
@@ -94,6 +94,7 @@ int main(){
 	Board *board=new Board();
 	int currX, currY, newX, newY;
 	string input;
+	Timer total;
 	do{
 		try{
 			system(CLEAR_COMMAND);
@@ -191,5 +192,6 @@ int main(){
 		}
 	} while(true);
 	delete board;
+	printMessage((string("Ta partia trwala ")+(string)total).c_str());
 	end();
 }

@@ -1,5 +1,4 @@
 #include "Board.h"
-#include "Figura.cpp"
 #include<iostream>
 #include<fstream>
 
