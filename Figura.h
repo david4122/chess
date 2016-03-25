@@ -99,7 +99,7 @@ class Figura {
 
 class Pion: public Figura{
 	public:
-		virtual bool checkMove(int, int) const;
+		bool checkMove(int, int) const;
 		Pion(Color);
 		~Pion();
 };
@@ -107,14 +107,14 @@ class Pion: public Figura{
 class Krol: public Figura{
 	public:
 		Krol(Color);
-		virtual bool checkMove(int, int) const;
+		bool checkMove(int, int) const;
 		~Krol();
 };
 
 class Hetman: public Figura{
 	public:
 		Hetman(Color);
-		virtual bool checkMove(int, int) const;
+		bool checkMove(int, int) const;
 		~Hetman();
 };
 
@@ -122,21 +122,21 @@ class Hetman: public Figura{
 class Goniec: public Figura{
 	public:
 		Goniec(Color);
-		virtual bool checkMove(int, int) const;
+		bool checkMove(int, int) const;
 		~Goniec();
 };
 
 class Skoczek: public Figura{
 	public:
 		Skoczek(Color);
-		virtual bool checkMove(int, int) const;
+		bool checkMove(int, int) const;
 		~Skoczek();
 };
 
 class Wieza: public Figura{
 	public:
 		Wieza(Color);
-		virtual bool checkMove(int, int) const;
+		bool checkMove(int, int) const;
 		~Wieza();
 };
 #endif
