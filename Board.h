@@ -7,20 +7,16 @@
 
 class Board{
 	struct Save{
+		friend class Board;
    		private:
 			Save *prev;
-		public:
 			int oldX, oldY, newX, newY;
 			bool oldfm, newfm;
 			bool castling;
 			const Figura *oldF, *newF;
 			Color capturedColor;
-
+		public:
 			Save(int,int,int,int, const Figura*, const Figura*, bool, Save*, Color);
-
-			Save * getPrev(){
-				return this->prev;
-			}
 	};
 
 	const Figura *board[8][8];
@@ -30,6 +26,7 @@ class Board{
 	int blackCapturedIt;
 	bool whiteTurn;
 	Save *lastMove;
+	int blackKingX, blackKingY, whiteKingY, whiteKingX;
 	bool checked;
 	bool castling;
 
@@ -49,6 +46,8 @@ class Board{
 #else
 		void setColors(int, int, int);
 #endif
+		void setWhiteKingPos(int, int);
+		void setBlackKingPos(int, int);
 		void save();
 		void load();
 		void undo();

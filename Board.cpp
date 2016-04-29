@@ -36,7 +36,7 @@ Board::Board(){
 	board[7][2]=new Goniec(BLACK);
 	board[7][5]=new Goniec(BLACK);
 	board[7][4]=new Krol(BLACK);
-	Figura::setWhiteKingPos(0,4);
+	setWhiteKingPos(0,4);
 	board[7][3]=new Hetman(BLACK);
 
 	for(int i=0;i<8;i++){
@@ -49,7 +49,7 @@ Board::Board(){
 	board[0][2]=new Goniec(WHITE);
 	board[0][5]=new Goniec(WHITE);
 	board[0][4]=new Krol(WHITE);
-	Figura::setBlackKingPos(7,4);
+	setBlackKingPos(7,4);
 	board[0][3]=new Hetman(WHITE);
 
 	this->lastMove=NULL;
@@ -63,6 +63,16 @@ Board::Board(){
 	blackCapturedIt=0;
 
 	this->castling=false;
+}
+
+void Board::setWhiteKingPos(int x, int y){
+	this->whiteKingX=x;
+	this->whiteKingY=y;
+}
+
+void Board::setBlackKingPos(int x, int y){
+	this->blackKingY=y;
+	this->blackKingX=x;
 }
 
 bool Board::checkTrack(int x, int y, int newX, int newY){
@@ -95,19 +105,19 @@ Color Board::checkKing(){
 		for(int j=0;j<8;j++){
 			if(board[i][j]->getColor()!=UNDEFINED){
 				if(board[i][j]->isWhite()){
-					if((tolower(board[i][j]->getChar())=='p'?false:(board[i][j]->checkMove(i-Figura::blackKingX(), j-Figura::blackKingY())))
-					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, Figura::blackKingX(), Figura::blackKingY()))){
+					if((tolower(board[i][j]->getChar())=='p'?false:(board[i][j]->checkMove(i-blackKingX, j-blackKingY)))
+					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, blackKingX, blackKingY))){
 						return BLACK;
 					}
-					if((std::abs(Figura::blackKingY()-j)==1)&&(i==Figura::blackKingX()-1)){
+					if((std::abs(blackKingY-j)==1)&&(i==blackKingX-1)){
 						return BLACK;
 					}
 				} else{
-					if((tolower(board[i][j]->getChar())=='p'?false:(board[i][j]->checkMove(i-Figura::whiteKingX(), j-Figura::whiteKingY())))
-					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, Figura::whiteKingX(), Figura::whiteKingY()))){
+					if((tolower(board[i][j]->getChar())=='p'?false:(board[i][j]->checkMove(i-whiteKingX, j-whiteKingY)))
+					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, whiteKingX, whiteKingY))){
 						return WHITE;
 					}
-					if((std::abs(Figura::whiteKingY()-j)==1)&&(i==Figura::whiteKingX()+1)){
+					if((std::abs(whiteKingY-j)==1)&&(i==whiteKingX+1)){
 						return WHITE;
 					}
 				}
@@ -136,10 +146,10 @@ void Board::undo(Save *save){
 		}
 	}
     if(board[save->oldX][save->oldY]->getChar()=='K')
-        Figura::setWhiteKingPos(save->oldX, save->oldY);
+        setWhiteKingPos(save->oldX, save->oldY);
     else if(board[save->oldX][save->oldY]->getChar()=='k')
-        Figura::setBlackKingPos(save->oldX, save->oldY);
-	this->lastMove=save->getPrev();
+        setBlackKingPos(save->oldX, save->oldY);
+	this->lastMove=save->prev;
 	whiteTurn=!whiteTurn;
 }
 
@@ -215,14 +225,14 @@ void Board::move(int x, int y, int newX, int newY){
 				throw new FieldIsBusyException();
 			if((board[x][y]->firstMove)&&(board[newX][newY+diff]->firstMove)){
                 if(board[x][y]->getChar()=='k')
-                    Figura::setBlackKingPos(x,y+(diff==-2?-1:1));
+                    setBlackKingPos(x,y+(diff==-2?-1:1));
                 else
-                    Figura::setWhiteKingPos(x,y+(diff==-2?-1:1));
+                    setWhiteKingPos(x,y+(diff==-2?-1:1));
                 if((checkColor=checkKing())!=UNDEFINED){
                     if(board[x][y]->getChar()=='k')
-                        Figura::setBlackKingPos(x,y);
+                        setBlackKingPos(x,y);
                     else
-                        Figura::setWhiteKingPos(x,y);
+                        setWhiteKingPos(x,y);
                     throw new Check("Szach na polu, przez ktore przechodzi krol.");
                 }
 
@@ -238,9 +248,9 @@ void Board::move(int x, int y, int newX, int newY){
 				board[newX][newY+diff]=board[newX][newY+(diff==-2?1:-1)];
 				board[newX][newY+(diff==-2?1:-1)]=tmp;
                 if(board[newX][newY]->getChar()=='K')
-                    Figura::setWhiteKingPos(newX, newY);
+                    setWhiteKingPos(newX, newY);
                 else if(board[newX][newY]->getChar()=='k')
-                    Figura::setBlackKingPos(newX, newY);
+                    setBlackKingPos(newX, newY);
 				if((checkColor=checkKing())!=UNDEFINED){
                     undo(lastMove);
                     throw new Check();
@@ -273,9 +283,9 @@ void Board::move(int x, int y, int newX, int newY){
 	if(board[newX][newY]->firstMove)
 		board[newX][newY]->firstMove=false;
 	if(board[newX][newY]->getChar()=='K')
-		Figura::setWhiteKingPos(newX,newY);
+		setWhiteKingPos(newX,newY);
 	if(board[newX][newY]->getChar()=='k')
-		Figura::setBlackKingPos(newX,newY);
+		setBlackKingPos(newX,newY);
 
 	if(tolower(board[newX][newY]->getChar())=='p'){
 		if(newX==0||newX==7)
@@ -294,9 +304,9 @@ void Board::move(int x, int y, int newX, int newY){
 			if(checkColor==board[newX][newY]->getColor()){
 				undo(lastMove);
 				if(board[x][y]->getChar()=='K')
-					Figura::setWhiteKingPos(x,y);
+					setWhiteKingPos(x,y);
 				if(board[x][y]->getChar()=='k')
-					Figura::setBlackKingPos(x,y);
+					setBlackKingPos(x,y);
 				throw new Check();
 			}
 			this->checked=true;
@@ -390,9 +400,9 @@ void Board::load(){
 		restored[buff[0]-'0'][buff[1]-'0']=f;
 		f->firstMove=(buff[3]=='1');
 		if(f->getChar()=='k')
-			Figura::setBlackKingPos(buff[0]-'0', buff[1]-'0');
+			setBlackKingPos(buff[0]-'0', buff[1]-'0');
 		else if(f->getChar()=='K')
-			Figura::setWhiteKingPos(buff[0]-'0', buff[1]-'0');
+			setWhiteKingPos(buff[1]-'0', buff[1]-'0');
 		in>>buff;
 	}
 	in>>buff;

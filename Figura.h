@@ -21,7 +21,6 @@ class Figura {
 #endif
 		const Color color;
 		const char olaf;
-		static int whiteX, whiteY, blackX, blackY;
 		mutable bool firstMove;
 		explicit Figura(char='+', Color=UNDEFINED);
 
@@ -30,32 +29,6 @@ class Figura {
 		Figura(std::string);
 
 		operator std::string() const;
-
-        static int whiteKingX(){
-            return whiteX;
-        }
-
-        static int whiteKingY(){
-            return whiteY;
-        }
-
-        static int blackKingX(){
-            return blackX;
-        }
-
-        static int blackKingY(){
-            return blackY;
-        }
-
-		static void setWhiteKingPos(int x, int y){
-            whiteX=x;
-            whiteY=y;
-		}
-
-        static void setBlackKingPos(int x, int y){
-            blackX=x;
-            blackY=y;
-        }
 
 #ifdef LINUX_VERSION
 		static void setColorCodes(std::string black, std::string white, std::string defaultColor){

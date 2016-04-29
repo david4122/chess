@@ -14,11 +14,6 @@ int Figura::whiteColorCode=10;
 int Figura::defaultColorCode=11;
 #endif
 
-int Figura::whiteX;
-int Figura::whiteY;
-int Figura::blackX;
-int Figura::blackY;
-
 Figura::Figura(char s, Color c): olaf(s), color(c){
 	this->firstMove=true;
 }

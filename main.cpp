@@ -110,6 +110,7 @@ int main(){
 				continue;
 			}
 			if(input=="restart"){
+				delete board;
                 board=new Board();
                 continue;
 			}
