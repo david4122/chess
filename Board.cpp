@@ -106,20 +106,16 @@ Color Board::checkKing(){
 			if(board[i][j]->getColor()!=UNDEFINED){
 				if(board[i][j]->isWhite()){
 					if((tolower(board[i][j]->getChar())=='p'?false:(board[i][j]->checkMove(i-blackKingX, j-blackKingY)))
-					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, blackKingX, blackKingY))){
+					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, blackKingX, blackKingY)))
 						return BLACK;
-					}
-					if((std::abs(blackKingY-j)==1)&&(i==blackKingX-1)){
+					if((std::abs(blackKingY-j)==1)&&(i==blackKingX-1))
 						return BLACK;
-					}
 				} else{
 					if((tolower(board[i][j]->getChar())=='p'?false:(board[i][j]->checkMove(i-whiteKingX, j-whiteKingY)))
-					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, whiteKingX, whiteKingY))){
+					   &&(tolower(board[i][j]->getChar())=='s'?true:checkTrack(i,j, whiteKingX, whiteKingY)))
 						return WHITE;
-					}
-					if((std::abs(whiteKingY-j)==1)&&(i==whiteKingX+1)){
+					if((std::abs(whiteKingY-j)==1)&&(i==whiteKingX+1))
 						return WHITE;
-					}
 				}
 			}
 
@@ -136,14 +132,10 @@ void Board::undo(Save *save){
 	board[save->oldX][save->oldY]->firstMove=save->oldfm;
 	this->castling=save->castling;
 	if(save->capturedColor!=UNDEFINED){
-		if(save->capturedColor==WHITE){
-			std::cout<<"WHITE__";
+		if(save->capturedColor==WHITE)
 			this->whiteCapturedIt--;
-		}
-		else{
-			std::cout<<"BLACK__";
+		else
 			this->blackCapturedIt--;
-		}
 	}
     if(board[save->oldX][save->oldY]->getChar()=='K')
         setWhiteKingPos(save->oldX, save->oldY);
