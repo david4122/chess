@@ -1,21 +1,15 @@
 //WERSJA NA LINUXA!!!
-//Dla Windows skasowac ponizsza linie
-#define LINUX_VERSION
+//ZMIENIC W version.info
+#include "version.info"
 
 #include<iostream>
 #include<fstream>
-#include "Figura.cpp"
-#include "Board.cpp"
-
-#ifdef LINUX_VERSION
-#define CLEAR_COMMAND "clear"
-#else
-#define CLEAR_COMMAND "cls"
-#endif
+#include "Figura.h"
+#include "Board.h"
 
 using namespace std;
 
-string helpMessage=
+const char *helpMessage=
 	"help\t-\twyswietl ta wiadomosc\n"
 	"quit\t-\t\n"
 	"exit\t-\twyjscie\n"
@@ -25,8 +19,7 @@ string helpMessage=
 	"surr\t-\tpoddanie sie (Wpisz jesli jest mat lub pat)\n"
 	"restart\t-\treset gry\n"
 	"undo\t-\tcofnij\n"
-	"report\t-\tzostaw wiadomosc\n"
-	"Aby przesunac figure nalezy wpisac sekwencje <obecnyRzadObecnaKolumnaNowyRzadNowaKolumna>, np.a2a4";
+	"Aby przesunac figure nalezy wpisac sekwencje <obecnaKolumnaObecnyRzadNowaKolumnaNowyRzad>, np.a2a4";
 
 void printLogo(){
 	ifstream in;
@@ -36,21 +29,15 @@ void printLogo(){
 	while(!in.eof()){
 		getline(in, buff);
 		cout<<buff<<endl<<flush;
-		//system("sleep 1s");
 	}
+	in.close();
 	cout<<"\tDawid Brewinski\n";
 	cout<<"\tMichal Pompa\n";
 	cout<<"\tMichal Wilczak\n";
 	cout<<endl;
 	cout<<"\thttps://github.com/david4122/chess.git\n"<<endl;
 
-	cout<<"Wpisz \"help\", jesli uruchamiasz po raz pierwszy."<<endl;
-#ifdef LINUX_VERSION
-	cout<<"Naisnij \"enter\"."<<endl;
-	getline(cin, buff);
-#else
-	system("PAUSE");
-#endif
+	cout<<"Wybierz \"Pomoc\", jesli uruchamiasz po raz pierwszy."<<endl;
 }
 
 void end(){
@@ -78,20 +65,49 @@ inline int convert(char c){
 	return x;
 }
 
-void report(string s){
-	ofstream out("reports", ios_base::app);
-	out.write(s.c_str(), s.length());
-	out<<"\n---------------------------------------------------\n";
-	out.close();
-}
-
 void printMessage(const char *c){
-	cout<<c<<"\nNacisnij \"enter\""<<endl;
+	cout<<c<<endl;
+#ifndef LINUX_VERSION
+	system("PAUSE");
+#else
 	getchar();
+#endif
 }
 
-int main(){
-	printLogo();
+void playFromFile(){
+	ifstream moves("moves");
+	Board *board=new Board();
+	string line;
+	int currX, currY, newX, newY;
+	try{
+		do {
+			moves>>line;
+			if(!moves){
+				cout<<"KONIEC PARTII\n";
+				getchar();
+				break;
+			}
+			system(CLEAR_COMMAND);
+			cout<<"->"<<line<<"<-"<<endl;
+			currY=convert(line[0]);
+			currX=convert(line[1]);
+			newY=convert(line[2]);
+			newX=convert(line[3]);
+			try {
+				board->move(currX, currY, newX, newY);
+			} catch(Check *e){
+				cout<<"\tSZACH\n";
+			}
+			board->print();
+			for(int i=0;i<200000000;i++);
+		} while(true);
+	} catch(Exception *e){
+		printMessage("FILE CORRUPTED");
+	}
+	moves.close();
+}
+
+void play(){
 	Board *board=new Board();
 	int currX, currY, newX, newY;
 	string input;
@@ -122,7 +138,7 @@ int main(){
 				break;
 			if(input=="colors"){
 #ifdef LINUX_VERSION
-				cout<<"KODY: \"x;y;zm\", gdzie x to styl (0 do 8), y to kolor czcionki (30 do 38), a z to kolor podswietlenia (40 do 48). \"0m\" wylacza kolor.\n";
+				cout<<"KODY: \"x;y;z\", gdzie x to styl (0 do 8), y to kolor czcionki (30 do 38), a z to kolor podswietlenia (40 do 48). \"0\" wylacza kolor.\n";
 				string newWhite;
 				string newBlack;
 				string newDefault;
@@ -151,13 +167,6 @@ int main(){
 			}
 			if(input=="surr"){
                 throw new GameOver();
-			}
-			if(input=="report"){
-				cout<<"wpisz wiadomosc do autora:\n";
-				string res;
-				getline(cin, res);
-				report(res);
-				continue;
 			}
 			if(input.length()!=4){
 				throw new IOException("FORMAT WEJSCIA: <kolumna><rzad><nowaKolumna><nowyRzad>, np. a2a4");
@@ -193,5 +202,39 @@ int main(){
 		}
 	} while(true);
 	delete board;
+}
+
+int main(){
+	bool flag=false;
+	do {
+		printLogo();
+		cout<<"1) Graj\n"
+			"2) Wyswietl partie pokazowa\n"
+			"3) Pomoc\n"
+			"4) Wyjscie\n";
+		if(flag){
+			cout<<"Wybierz cyfre od 1 do 4!";
+			flag=false;
+		}
+		int choise;
+		cin>>choise;
+		cin.ignore(1);
+		switch(choise){
+			case 1:
+				play();
+				break;
+			case 2:
+				playFromFile();
+				break;
+			case 3:
+				printMessage(helpMessage);
+				break;
+			case 4:
+				goto et;
+			default:
+				flag=true;
+		}
+	} while(true);
+et:
 	end();
 }

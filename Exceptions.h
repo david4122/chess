@@ -1,14 +1,18 @@
 #ifndef  EXCEPTIONS_H
 #define EXCEPTIONS_H
-class TurnException{};
+#include<string>
 
-class MoveException{};
+class Exception{};
 
-class RangeException{};
+class TurnException : public Exception{};
 
-class FieldIsBusyException{};
+class MoveException : public Exception{};
 
-class IOException{
+class RangeException : public Exception{};
+
+class FieldIsBusyException : public Exception{};
+
+class IOException : public Exception{
 	std::string reason;
 	public:
 		IOException(){
@@ -23,7 +27,7 @@ class IOException{
 	}
 };
 
-class TrackNotEmptyException{};
+class TrackNotEmptyException : public Exception{};
 
 class Check{
     std::string reason;
@@ -41,9 +45,9 @@ class Check{
         }
 };
 
-class GameOver{};
+class GameOver : public Exception{};
 
-class NoPrevSave{};
+class NoPrevSave : public Exception{};
 
-class NullField{};
+class NullField : public Exception{};
 #endif

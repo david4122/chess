@@ -1,3 +1,4 @@
+#include "version.info"
 #include "Board.h"
 #include<iostream>
 #include<fstream>
@@ -18,7 +19,6 @@ Board::Save::Save(int oldX, int oldY, int newX, int newY, const Figura *oldF, co
 	this->castling=castling;
 	this->prev=prev;
 	this->capturedColor=color;
-	std::cout<<(capturedColor==WHITE?"WHITE":"BLACK")<<std::endl;
 }
 
 Board::Board(){
@@ -317,12 +317,12 @@ void Board::move(int x, int y, int newX, int newY){
 }
 
 #ifndef LINUX_VERSION
-inline void Board::setColors(int newBlack, int newWhite, int newDefault){
+void Board::setColors(int newBlack, int newWhite, int newDefault){
 	Figura::setColorCodes(newBlack, newWhite, newDefault);
 }
 #else
-inline void Board::setColors(std::string newWhite, std::string newBlack, std::string newDefault){
-	Figura::setColorCodes("\033["+newBlack, "\033["+newWhite, "\033["+newDefault);
+void Board::setColors(std::string newWhite, std::string newBlack, std::string newDefault){
+	Figura::setColorCodes("\033["+newBlack+"m", "\033["+newWhite+"m", "\033["+newDefault+"m");
 }
 #endif
 

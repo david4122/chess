@@ -1,6 +1,9 @@
 #ifndef INFO_H
 #define INFO_H
+//LINUX VERSION
+//FOR WINDOWS DELETE THE FOLLOWING LINE
 #define LINUX_VERSION
+
 #ifdef LINUX_VERSION
 #define CLEAR_COMMAND "clear"
 #else

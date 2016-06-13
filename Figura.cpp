@@ -1,3 +1,4 @@
+#include "version.info"
 #include "Figura.h"
 #include "Board.h"
 #include<string>
